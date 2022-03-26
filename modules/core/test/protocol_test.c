@@ -13,6 +13,9 @@ static uint8_t m_transmit_buffer[BUFFER_LEN] = {0x00};
 static uint8_t m_transmit_index = 0;
 static uint8_t m_receive_index  = 0;
 
+static struct protocol_dev m_cfg;
+
+
 static void send_byte(uint8_t byte)
 {
 	m_transmit_buffer[m_transmit_index++] = byte;
@@ -27,22 +30,20 @@ TEST_GROUP(protocol);
 
 TEST_SETUP(protocol)
 {
-	struct protocol_dev cfg;
-
-	cfg.send_byte_callback    = send_byte;
-	cfg.receive_byte_callback = receive_byte;
+	m_cfg.send_byte_callback    = send_byte;
+	m_cfg.receive_byte_callback = receive_byte;
 
 	memset(m_receive_buffer, 0, BUFFER_LEN);
 	memset(m_transmit_buffer, 0, BUFFER_LEN);
 	m_transmit_index = 0;
 	m_receive_index  = 0;
 
-	protocol_init(cfg);
+	protocol_init(&m_cfg);
 }
 
 TEST_TEAR_DOWN(protocol)
 {
-	protocol_reset();
+	protocol_reset(&m_cfg);
 }
 
 // #############################################################################
@@ -52,7 +53,7 @@ TEST(protocol, test_protocol_send_package)
 	const uint8_t payload_length = 4;
 	uint8_t       data[4]        = {1, 2, 3, 4};
 
-	protocol_send_package(DUMMY_CMD, payload_length, data);
+	protocol_send_package(&m_cfg, DUMMY_CMD, payload_length, data);
 
 	TEST_ASSERT_EQUAL(payload_length + 3, m_transmit_index);
 
@@ -77,7 +78,7 @@ TEST(protocol, test_protocol_waitfor_package)
 	struct package received;
 	memset(&received, 0x00, sizeof(received));
 
-	protocol_waitfor_package(&received);
+	protocol_waitfor_package(&m_cfg, &received);
 
 	TEST_ASSERT_EQUAL(4, m_receive_index);
 
@@ -100,7 +101,7 @@ TEST(protocol, test_protocol_waitfor_package_with_zero_payload)
 	struct package received;
 	memset(&received, 0x00, sizeof(received));
 
-	protocol_waitfor_package(&received);
+	protocol_waitfor_package(&m_cfg, &received);
 
 	TEST_ASSERT_EQUAL(3, m_receive_index);
 }
@@ -121,7 +122,7 @@ TEST(protocol, test_protocol_waitfor_package_with_max_payload)
 	struct package received;
 	memset(&received, 0x00, sizeof(received));
 
-	protocol_waitfor_package(&received);
+	protocol_waitfor_package(&m_cfg,&received);
 
 	TEST_ASSERT_EQUAL(PROTOCOL_MAX_PAYLOAD, received.length);
 }
@@ -143,7 +144,7 @@ TEST(protocol, test_protocol_reset_index_when_command_is_start_byte)
 	struct package received;
 	memset(&received, 0x00, sizeof(received));
 
-	protocol_waitfor_package(&received);
+	protocol_waitfor_package(&m_cfg, &received);
 
 	TEST_ASSERT_EQUAL(DUMMY_CMD, received.cmd);
 	TEST_ASSERT_EQUAL(0, received.length);
@@ -153,7 +154,7 @@ TEST(protocol, test_protocol_sync)
 {
 	memset(m_transmit_buffer, 0xFF, BUFFER_LEN);
 
-	protocol_sync();
+	protocol_sync(&m_cfg);
 
 	for (uint8_t i = 0; i <= PROTOCOL_MAX_PAYLOAD; i++) {
 		TEST_ASSERT_EQUAL(PROTOCOL_START_BYTE, m_transmit_buffer[i]);

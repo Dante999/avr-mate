@@ -10,6 +10,8 @@
 typedef void (*send_byte_cb)(uint8_t);
 typedef uint8_t (*receive_byte_cb)();
 
+enum state { WAITFOR_SYNC, WAITFOR_CMD, WAITFOR_LENGTH, WAITFOR_DATA };
+
 struct package {
 	uint8_t cmd;
 	uint8_t length;
@@ -19,12 +21,16 @@ struct package {
 struct protocol_dev {
 	send_byte_cb    send_byte_callback;
 	receive_byte_cb receive_byte_callback;
+	struct package  package;
+	bool            receive_complete;
+	enum state      state;
 };
 
-void protocol_init(struct protocol_dev cfg);
-void protocol_sync();
-void protocol_reset();
-void protocol_send_package(uint8_t cmd, uint8_t length, const uint8_t *payload);
-void protocol_waitfor_package(struct package *result);
+void protocol_init(struct protocol_dev *cfg);
+void protocol_sync(struct protocol_dev *cfg);
+void protocol_reset(struct protocol_dev *cfg);
+void protocol_send_package(struct protocol_dev *cfg, uint8_t cmd,
+                           uint8_t length, const uint8_t *payload);
+void protocol_waitfor_package(struct protocol_dev *cfg, struct package *result);
 
 #endif /* AVRMATE_PROTOCOL_H */
