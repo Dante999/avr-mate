@@ -18,12 +18,16 @@ struct package {
 	uint8_t payload[PROTOCOL_MAX_PAYLOAD];
 };
 
+struct protocol_internals {
+	struct package package;
+	bool           receive_complete;
+	enum state     state;
+};
+
 struct protocol_dev {
-	send_byte_cb    send_byte_callback;
-	receive_byte_cb receive_byte_callback;
-	struct package  package;
-	bool            receive_complete;
-	enum state      state;
+	send_byte_cb              send_byte_callback;
+	receive_byte_cb           receive_byte_callback;
+	struct protocol_internals internals;
 };
 
 void protocol_init(struct protocol_dev *cfg);
