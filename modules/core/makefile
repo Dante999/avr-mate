@@ -26,6 +26,7 @@ VPATH += $(UNITY_ROOT)/extras/memory/src
 # List of all sources (only source-files)
 SOURCES  = graphx.c
 SOURCES += protocol.c
+SOURCES += cartridge.c
 
 
 
@@ -109,6 +110,7 @@ LDFLAGS =
 ################################################################################
 
 all: prepare clean test run_tests
+objects: $(OBJECTS)
 
 prepare:
 	mkdir -p $(BUILDPATH)
@@ -118,16 +120,8 @@ prepare:
 	@echo "test object files: $(TEST_OBJECTS)"
 
 $(OBJ_PATTERN): %.c
-	@echo "CC '$<' -> '$@'"
+	@echo "CC \t$<"
 	@$(CC) $(CFLAGS) $< -o $@
-
-$(OBJ_PATTERN): %.c
-	@echo "CC '$<' -> '$@'"
-	@$(CC) $(CFLAGS) $< -o $@
-
-objects: $(OBJECTS)
-
-
 
 build: $(OBJECTS)
 	@echo "\n\n-----\n linking objects\n-----"
@@ -147,4 +141,4 @@ clean_tmp:
 
 clean:
 	rm -rf $(BUILDPATH)/*.o
-		@echo "\n-------\n"
+	@echo "\n-------\n"
