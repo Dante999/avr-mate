@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define PAYLOAD_MAX_TEXT_LENGTH  20
+#define PAYLOAD_MAX_TEXT_LENGTH 20
 
 enum result { RESULT_OK, RESULT_NOK, RESULT_WRONG_COMMAND };
 
@@ -25,8 +25,6 @@ enum commands {
 	CMD_GET_BUTTONS
 };
 
-
-
 enum cp_color { COLOR_WHITE, COLOR_BLACK };
 
 enum cp_button_msk {
@@ -47,8 +45,8 @@ struct cp_text {
 };
 
 struct cp_pixel {
-	uint8_t x;
-	uint8_t y;
+	uint8_t       x;
+	uint8_t       y;
 	enum cp_color color;
 };
 

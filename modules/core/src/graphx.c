@@ -35,7 +35,7 @@ static uint8_t graphx_get_byte(uint8_t x, uint8_t y)
 	return byte;
 }
 
-uint8_t *graphx_get_buffer()
+const uint8_t *graphx_get_buffer()
 {
 	return g_buffer;
 }

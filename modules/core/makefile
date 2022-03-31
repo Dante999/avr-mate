@@ -27,6 +27,7 @@ VPATH += $(UNITY_ROOT)/extras/memory/src
 SOURCES  = graphx.c
 SOURCES += protocol.c
 SOURCES += cartridge.c
+SOURCES += handheld.c
 
 
 
@@ -35,8 +36,9 @@ TEST_SOURCES += unity_fixture.c
 #TEST_SOURCES += unity_memory.c
 
 TEST_SOURCES += main.c
-TEST_SOURCES += graphx_test.c
-TEST_SOURCES += protocol_test.c
+TEST_SOURCES += test_graphx.c
+TEST_SOURCES += test_protocol.c
+TEST_SOURCES += test_handheld_cartridge.c
 
 
 ################################################################################
@@ -77,7 +79,7 @@ CFLAGS += -I$(UNITY_ROOT)/extras/fixture/src
 CFLAGS += -I$(UNITY_ROOT)/extras/memory/src
 
 CFLAGS += -c                       # Compile and assemble, but do not link
-#CFLAGS += -g                       # Generate debug information in default format
+CFLAGS += -g                       # Generate debug information in default format
 CFLAGS += -Os                      # Optimize for space rather than speed
 CFLAGS += -std=c99                 # Use this C standard
 
@@ -96,7 +98,6 @@ CFLAGS += -funsigned-bitfields     # Make any unqualified bitfield type unsigned
 CFLAGS += -DTEST
 CFLAGS += $(EXTRA_FLAGS)
 
-
 ################################################################################
 # Linker
 ################################################################################
@@ -104,12 +105,13 @@ LD := gcc
 
 LDFLAGS = 
 
-
+TEST_LDFLAGS += $(LDFLAGS)
+TEST_LDFLAGS += -pthread
 ################################################################################
 # Makefile targets
 ################################################################################
 
-all: prepare clean test run_tests
+all: prepare clean test 
 objects: $(OBJECTS)
 
 prepare:
@@ -129,7 +131,7 @@ build: $(OBJECTS)
 
 test: $(TEST_OBJECTS)
 	@echo "\n\n-----\n linking test objects\n-----"
-	$(LD) $(LDFLAGS) $(TEST_OBJECTS) -o $(BUILDPATH)/$(TARGET)_test
+	$(LD) $(TEST_LDFLAGS) $(TEST_OBJECTS) -o $(BUILDPATH)/$(TARGET)_test
 
 run_tests:
 	@echo "\n\n-----\n RUNNING TESTS\n-----"

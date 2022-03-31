@@ -1,3 +1,11 @@
 #object files
 *.o
 modules/core/build
+*.swp
+*.cflags
+*.config
+*.creator
+*.cxxflags
+*.files
+*.includes
+*.creator.user

@@ -18,7 +18,7 @@ enum graphx_color_e { PIXEL_OFF, PIXEL_ON, PIXEL_TOGGLE };
 uint8_t graphx_get_pixel(uint8_t x, uint8_t y);
 
 void graphx_get_tile(uint8_t x, uint8_t y, uint8_t *tile, uint8_t w, uint8_t h);
-uint8_t *graphx_get_buffer();
+const uint8_t *graphx_get_buffer();
 
 void graphx_fill(uint8_t color);
 void graphx_draw_char(const uint8_t font[], uint8_t x, uint8_t y, const char c);
