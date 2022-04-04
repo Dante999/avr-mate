@@ -1,11 +1,12 @@
 #include "avr-mate-core/protocol.h"
 
-#include <stdio.h>
 #include <assert.h>
+#include <stdio.h>
 
 void protocol_init(struct protocol_dev *cfg)
 {
 	assert(cfg->send_byte_callback != NULL);
+	assert(cfg->receive_byte_callback != NULL);
 
 	cfg->internals.state            = WAITFOR_SYNC;
 	cfg->internals.receive_complete = false;

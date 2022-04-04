@@ -7,13 +7,13 @@
 #include <unistd.h>
 
 #define PRINT_DBG(msg)  (void)msg
-#define LOOP_DELAY_MSEC 100
 
-#define SLEEP_UNTIL_NEXT_CHECK() usleep(50000)
+
+#define SLEEP_UNTIL_NEXT_CHECK() usleep(100 * 1000)
 
 static pthread_mutex_t g_mutex          = PTHREAD_MUTEX_INITIALIZER;
 static volatile bool   g_handheld_ready = false;
-// static volatile bool g_transceiving_done = false;
+
 
 static volatile uint8_t g_handheld_buffer;
 static volatile uint8_t g_cartridge_buffer;

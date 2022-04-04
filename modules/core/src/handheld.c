@@ -1,6 +1,7 @@
 #include "avr-mate-core/handheld.h"
 #include "avr-mate-core/font5x7.h"
 
+#include <assert.h>
 #include <stddef.h>
 
 struct handheld_dev *g_cfg;
@@ -83,6 +84,11 @@ static void cmd_get_buttons()
 
 void handheld_init(struct handheld_dev *cfg)
 {
+	assert(cfg->draw_buffer != NULL);
+	assert(cfg->get_buttons != NULL);
+	assert(cfg->publish_busy != NULL);
+	assert(cfg->publish_ready != NULL);
+
 	g_cfg = cfg;
 	graphx_fill(0x00);
 	protocol_init(&cfg->protocol);
