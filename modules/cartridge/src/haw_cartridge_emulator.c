@@ -1,5 +1,6 @@
 #include "cartridge/haw_cartridge.h"
 
+#include "cartridge/haw_logger.h"
 #include "fifo.h"
 
 #include "avr-mate-core/protocol.h"
@@ -44,4 +45,16 @@ void haw_cartridge_init(struct cartridge_dev *dev)
 
 	fifo_open(&g_pipe_cartridge_receive, O_RDONLY);
 	fifo_open(&g_pipe_cartridge_send, O_WRONLY);
+
+	cartridge_init(dev);
+	cartridge_sync_with_handheld();
+
+	enum result ret = cartridge_ping();
+
+	if (ret != RESULT_OK) {
+		LOG_WARNING("Result of ping was not pong");
+	}
+	else {
+		LOG_INFO("Ping successful");
+	}
 }
