@@ -1,6 +1,6 @@
 #object files
 *.o
-modules/core/build
+build
 *.swp
 *.cflags
 *.config
