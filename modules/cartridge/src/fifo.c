@@ -45,13 +45,11 @@ int fifo_open(struct fifo_pipe *f, int mode)
 
 	/* FIFO zum Lesen und Schreiben öffnen */
 	if ((f->handle = open(f->path, mode)) == -1) {
-		char msg[100];
 		snprintf(msg, 100, "error opening pipe %s: %s", f->path,
 		         strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 	else {
-		char msg[100];
 		snprintf(msg, 100, "opening pipe %s successful", f->path);
 		LOG_INFO(msg);
 	}
