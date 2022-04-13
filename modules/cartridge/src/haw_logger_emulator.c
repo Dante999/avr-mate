@@ -2,12 +2,7 @@
 
 #include <stdio.h>
 
-void log_print(const char *msg)
-{
-#if LOG_LEVEL > LEVEL_OFF
-	printf("%s", msg);
-#endif
-}
+void log_init() {}
 
 void log_println(const char *prefix, const char *msg)
 {

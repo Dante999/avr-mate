@@ -11,7 +11,7 @@
 #	define LOG_LEVEL LEVEL_INFO
 #endif
 
-void log_print(const char *msg);
+void log_init();
 void log_println(const char *prefix, const char *msg);
 
 #if (LOG_LEVEL <= LEVEL_DEBUG)
