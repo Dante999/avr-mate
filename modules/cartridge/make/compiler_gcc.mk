@@ -30,4 +30,12 @@ LD := gcc
 
 LDFLAGS = 
 
-TEST_LDFLAGS += $(LDFLAGS)
+
+build: $(OBJECTS)
+	@echo "\n\n--- linking objects ---"
+	@echo "objects: $(OBJECTS)\n"
+	@$(LD) $(LDFLAGS) $(OBJECTS) -o $(BUILDPATH)/$(TARGET)
+	@echo "-> $(BUILDPATH)/$(TARGET)"
+	@echo "--------------------\n"
+
+
