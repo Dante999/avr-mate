@@ -12,7 +12,7 @@ E_FUSE=0xFD
 # Progammer
 # [usbasp|arduino]
 PROGRAMMER=arduino
-PORT=-P/dev/ttyUSB1
+PORT=-P/dev/ttyUSB0
 
 
 EXTRA_FLAGS += -mmcu=$(MCU)

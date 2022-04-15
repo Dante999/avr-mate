@@ -2,6 +2,7 @@
 
 #include <avr/interrupt.h>
 #include <avr/io.h>
+#include <stdio.h>
 #include <util/delay.h>
 
 #include "cartridge/haw_logger.h"
@@ -13,10 +14,10 @@
 #define SPI_BIT_SCK  (1 << PB5)
 #define SPI_BIT_SS   (1 << PB2)
 
-#define DDRX_READY  DDRB
-#define PORTX_READY PORTB
-#define PINX_READY  PINB
-#define BIT_READY   (1 << PB1)
+#define DDRX_READY  DDRC
+#define PORTX_READY PORTC
+#define PINX_READY  PINC
+#define BIT_READY   (1 << PC0)
 
 // valid values: 2, 4, 8, 16, 32, 64, 128
 #define SPI_CLK_RATE 2
@@ -127,15 +128,23 @@ void haw_cartridge_init(struct cartridge_dev *dev)
 	dev->protocol.receive_byte_callback = haw_cartridge_receive_byte;
 
 	cartridge_init(dev);
+
+	LOG_INFO("syncing with handheld");
 	cartridge_sync_with_handheld();
 
-	enum result ret = cartridge_ping();
+	LOG_INFO("sending ping to handheld...");
+	enum result ret = RESULT_NOK;
 
-	if (ret != RESULT_OK) {
-		LOG_WARNING("Result of ping was not pong");
-	}
-	else {
-		LOG_INFO("Ping successful");
+	while (ret != RESULT_OK) {
+		ret = cartridge_ping();
+
+		if (ret != RESULT_OK) {
+			LOG_WARNING("ping failed");
+			cartridge_sync_with_handheld();
+		}
+		else {
+			LOG_INFO("ping successful");
+		}
 	}
 
 	LOG_INFO("cartridge initialization done!");
