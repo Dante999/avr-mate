@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#ifdef __AVR_ARCH__
+#ifdef __AVR__
 #	include <avr/pgmspace.h>
 #endif
 
@@ -13,8 +13,8 @@
 
 inline uint8_t font_get_width(const uint8_t font[])
 {
-#ifdef __AVR_ARCH__
-	return pgm_read_byte(font[FONT_OFFSET_WIDTH]);
+#ifdef __AVR__
+	return pgm_read_byte(&font[FONT_OFFSET_WIDTH]);
 #else
 	return font[FONT_OFFSET_WIDTH];
 #endif
@@ -22,8 +22,8 @@ inline uint8_t font_get_width(const uint8_t font[])
 
 inline uint8_t font_get_height(const uint8_t font[])
 {
-#ifdef __AVR_ARCH__
-	return pgm_read_byte(font[FONT_OFFSET_HEIGHT]);
+#ifdef __AVR__
+	return pgm_read_byte(&font[FONT_OFFSET_HEIGHT]);
 #else
 	return font[FONT_OFFSET_HEIGHT];
 #endif
@@ -31,8 +31,8 @@ inline uint8_t font_get_height(const uint8_t font[])
 
 inline uint8_t font_get_byte(const uint8_t font[], uint16_t index)
 {
-#ifdef __AVR_ARCH__
-	return pgm_read_byte(&(font[FONT_OFFSET_DATA + index]));
+#ifdef __AVR__
+	return pgm_read_byte(&font[FONT_OFFSET_DATA + index]);
 #else
 	return font[FONT_OFFSET_DATA + index];
 #endif

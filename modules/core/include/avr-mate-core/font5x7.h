@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#ifdef __AVR_ARCH__
+#ifdef __AVR__
 #	include <avr/pgmspace.h>
 
 static const uint8_t font5x7[] PROGMEM = {
