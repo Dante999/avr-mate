@@ -107,7 +107,7 @@ static void haw_cartridge_start_transmit(void)
 static void haw_cartridge_end_transmit(void)
 {
 	spi_disable_slave();
-	_delay_ms(2);
+	spi_delay();
 	spi_enable_slave();
 }
 
@@ -122,8 +122,8 @@ void haw_cartridge_init(struct cartridge_dev *dev)
 	spi_init();
 	LOG_INFO("spi initialized");
 
-	dev->before_transmit              = haw_cartridge_start_transmit;
-	dev->after_transmit                = haw_cartridge_end_transmit;
+	dev->before_transmit       = haw_cartridge_start_transmit;
+	dev->after_transmit        = haw_cartridge_end_transmit;
 	dev->protocol.send_byte    = haw_cartridge_send_byte;
 	dev->protocol.receive_byte = haw_cartridge_receive_byte;
 
