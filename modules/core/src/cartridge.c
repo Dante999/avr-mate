@@ -8,9 +8,9 @@ static struct package        g_answer_package;
 static void transmit_and_wait_for_answer(uint8_t cmd, uint8_t length,
                                          const uint8_t *data)
 {
-	g_cfg->start_transmit_cb();
+	g_cfg->before_transmit();
 	protocol_send_package(&g_cfg->protocol, cmd, length, data);
-	g_cfg->end_transmit_cb();
+	g_cfg->after_transmit();
 	protocol_waitfor_package(&g_cfg->protocol, &g_answer_package);
 }
 

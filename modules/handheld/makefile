@@ -105,7 +105,7 @@ LDFLAGS =
 # Makefile targets
 ################################################################################
 
-all: prepare clean hex eeprom flash_hex
+all: prepare clean hex eeprom 
 
 prepare:
 	mkdir -p $(BUILDPATH)

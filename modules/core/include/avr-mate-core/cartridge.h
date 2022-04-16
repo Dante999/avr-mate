@@ -4,11 +4,9 @@
 #include "avr-mate-core/commands.h"
 #include "avr-mate-core/protocol.h"
 
-typedef void (*transmitting_cb)();
-
 struct cartridge_dev {
-	transmitting_cb     start_transmit_cb;
-	transmitting_cb     end_transmit_cb;
+	void (*before_transmit)();
+	void (*after_transmit)();
 	struct protocol_dev protocol;
 };
 

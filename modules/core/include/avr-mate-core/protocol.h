@@ -7,9 +7,6 @@
 #define PROTOCOL_START_BYTE  0x00
 #define PROTOCOL_MAX_PAYLOAD 50
 
-typedef void (*send_byte_cb)(uint8_t);
-typedef uint8_t (*receive_byte_cb)();
-
 enum state { WAITFOR_SYNC, WAITFOR_CMD, WAITFOR_LENGTH, WAITFOR_DATA };
 
 struct package {
@@ -25,8 +22,8 @@ struct protocol_internals {
 };
 
 struct protocol_dev {
-	send_byte_cb              send_byte_callback;
-	receive_byte_cb           receive_byte_callback;
+	void (*send_byte)(uint8_t);
+	uint8_t (*receive_byte)();
 	struct protocol_internals internals;
 };
 

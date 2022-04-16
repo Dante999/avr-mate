@@ -40,8 +40,8 @@ handheld_emulator_c::handheld_emulator_c(sf::Image &img) : m_image(img)
 	m_handheld_dev.get_buttons                    = emulator_get_buttons;
 	m_handheld_dev.publish_busy                   = [] {};
 	m_handheld_dev.publish_ready                  = [] {};
-	m_handheld_dev.protocol.send_byte_callback    = emulator_send_byte;
-	m_handheld_dev.protocol.receive_byte_callback = emulator_receive_byte;
+	m_handheld_dev.protocol.send_byte    = emulator_send_byte;
+	m_handheld_dev.protocol.receive_byte = emulator_receive_byte;
 
 	handheld_init(&m_handheld_dev);
 }

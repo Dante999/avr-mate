@@ -30,8 +30,8 @@ TEST_GROUP(protocol);
 
 TEST_SETUP(protocol)
 {
-	m_cfg.send_byte_callback    = send_byte;
-	m_cfg.receive_byte_callback = receive_byte;
+	m_cfg.send_byte    = send_byte;
+	m_cfg.receive_byte = receive_byte;
 
 	memset(m_receive_buffer, 0, BUFFER_LEN);
 	memset(m_transmit_buffer, 0, BUFFER_LEN);

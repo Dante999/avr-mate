@@ -5,8 +5,8 @@
 
 void protocol_init(struct protocol_dev *cfg)
 {
-	assert(cfg->send_byte_callback != NULL);
-	assert(cfg->receive_byte_callback != NULL);
+	assert(cfg->send_byte != NULL);
+	assert(cfg->receive_byte != NULL);
 
 	cfg->internals.state            = WAITFOR_SYNC;
 	cfg->internals.receive_complete = false;
@@ -92,7 +92,7 @@ void protocol_waitfor_package(struct protocol_dev *cfg, struct package *result)
 {
 
 	while (!cfg->internals.receive_complete) {
-		const uint8_t c = cfg->receive_byte_callback();
+		const uint8_t c = cfg->receive_byte();
 		parse_received_byte(cfg, c);
 	}
 
@@ -103,7 +103,7 @@ void protocol_waitfor_package(struct protocol_dev *cfg, struct package *result)
 void protocol_sync(struct protocol_dev *cfg)
 {
 	for (uint8_t i = 0; i <= PROTOCOL_MAX_PAYLOAD; i++) {
-		cfg->send_byte_callback(PROTOCOL_START_BYTE);
+		cfg->send_byte(PROTOCOL_START_BYTE);
 	}
 
 	protocol_reset(cfg);
@@ -118,11 +118,11 @@ void protocol_reset(struct protocol_dev *cfg)
 void protocol_send_package(struct protocol_dev *cfg, uint8_t cmd,
                            uint8_t length, const uint8_t *payload)
 {
-	cfg->send_byte_callback(PROTOCOL_START_BYTE);
-	cfg->send_byte_callback(cmd);
-	cfg->send_byte_callback(length);
+	cfg->send_byte(PROTOCOL_START_BYTE);
+	cfg->send_byte(cmd);
+	cfg->send_byte(length);
 
 	for (uint8_t i = 0; i < length; ++i) {
-		cfg->send_byte_callback(payload[i]);
+		cfg->send_byte(payload[i]);
 	}
 }

@@ -59,8 +59,8 @@ int main(void)
 	dev.publish_busy                   = indicate_handheld_busy;
 	dev.get_buttons                    = handheld_get_buttons;
 	dev.draw_buffer                    = handheld_draw_buffer;
-	dev.protocol.receive_byte_callback = handheld_receive_byte;
-	dev.protocol.send_byte_callback    = handheld_send_byte;
+	dev.protocol.receive_byte = handheld_receive_byte;
+	dev.protocol.send_byte    = handheld_send_byte;
 
 	handheld_init(&dev);
 	LOG_INFO("handheld init done!");

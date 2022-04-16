@@ -40,10 +40,10 @@ void haw_cartridge_init(struct cartridge_dev *dev)
 {
 	log_init();
 
-	dev->start_transmit_cb              = haw_cartridge_start_transmit;
-	dev->end_transmit_cb                = haw_cartridge_end_transmit;
-	dev->protocol.send_byte_callback    = haw_cartridge_send_byte;
-	dev->protocol.receive_byte_callback = haw_cartridge_receive_byte;
+	dev->before_transmit              = haw_cartridge_start_transmit;
+	dev->after_transmit                = haw_cartridge_end_transmit;
+	dev->protocol.send_byte    = haw_cartridge_send_byte;
+	dev->protocol.receive_byte = haw_cartridge_receive_byte;
 
 	fifo_open(&g_pipe_cartridge_receive, O_RDONLY);
 	fifo_open(&g_pipe_cartridge_send, O_WRONLY);

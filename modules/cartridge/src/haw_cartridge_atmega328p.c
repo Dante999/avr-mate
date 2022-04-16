@@ -122,10 +122,10 @@ void haw_cartridge_init(struct cartridge_dev *dev)
 	spi_init();
 	LOG_INFO("spi initialized");
 
-	dev->start_transmit_cb              = haw_cartridge_start_transmit;
-	dev->end_transmit_cb                = haw_cartridge_end_transmit;
-	dev->protocol.send_byte_callback    = haw_cartridge_send_byte;
-	dev->protocol.receive_byte_callback = haw_cartridge_receive_byte;
+	dev->before_transmit              = haw_cartridge_start_transmit;
+	dev->after_transmit                = haw_cartridge_end_transmit;
+	dev->protocol.send_byte    = haw_cartridge_send_byte;
+	dev->protocol.receive_byte = haw_cartridge_receive_byte;
 
 	cartridge_init(dev);
 
