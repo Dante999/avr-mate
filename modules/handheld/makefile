@@ -23,7 +23,7 @@ E_FUSE=0xFF
 # Progammer
 # [usbasp|arduino]
 PROGRAMMER=arduino
-PORT=-P/dev/ttyUSB1
+PORT:=-P/dev/ttyUSB1
 #BAUD=-B9600
 
 EXTRA_FLAGS  = -DF_CPU=$(F_CPU)UL
@@ -50,6 +50,9 @@ SOURCES += graphx.c
 
 SOURCES += spi_slave.c
 SOURCES += logger.c
+SOURCES += i2cmaster.c
+SOURCES += ssd1306.c
+
 ################################################################################
 # Building Object files 
 ################################################################################
@@ -77,7 +80,7 @@ CFLAGS += -c                       # Compile and assemble, but do not link
 CFLAGS += -Os                      # Optimize for space rather than speed
 CFLAGS += -std=c99                 # Use this C standard
 
-CFLAGS += -Werror                  # Treat all warnings as errors
+#CFLAGS += -Werror                  # Treat all warnings as errors
 CFLAGS += -Wall                    # Print all warnings
 CFLAGS += -Wextra                  # Print extra (possibly unwanted) warnings
 CFLAGS += -Wunused                 # Enable all -Wunused- warnings
