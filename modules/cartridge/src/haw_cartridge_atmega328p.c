@@ -24,7 +24,7 @@
 
 static void spi_delay(void)
 {
-	_delay_ms(100);
+	_delay_ms(40);
 }
 
 static void spi_enable_slave(void)
@@ -146,6 +146,9 @@ void haw_cartridge_init(struct cartridge_dev *dev)
 			LOG_INFO("ping successful");
 		}
 	}
+
+	cartridge_clear_buffer();
+	cartridge_draw_buffer();
 
 	LOG_INFO("cartridge initialization done!");
 }

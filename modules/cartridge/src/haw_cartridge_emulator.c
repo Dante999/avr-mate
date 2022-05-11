@@ -63,4 +63,7 @@ void haw_cartridge_init(struct cartridge_dev *dev)
 	else {
 		LOG_INFO("Ping successful");
 	}
+
+	cartridge_clear_buffer();
+	cartridge_draw_buffer();
 }
