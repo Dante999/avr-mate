@@ -1,6 +1,7 @@
 #include "cartridge/haw_cartridge.h"
 
 #include "cartridge/haw_logger.h"
+#include "cartridge/haw_utils.h"
 #include "fifo.h"
 
 #include "avr-mate-core/protocol.h"
@@ -32,7 +33,10 @@ static uint8_t haw_cartridge_receive_byte()
 	return (uint8_t)byte;
 }
 
-static void haw_cartridge_start_transmit() {}
+static void haw_cartridge_start_transmit()
+{
+	sleep_for_ms(10);
+}
 
 static void haw_cartridge_end_transmit() {}
 
@@ -40,8 +44,8 @@ void haw_cartridge_init(struct cartridge_dev *dev)
 {
 	log_init();
 
-	dev->before_transmit              = haw_cartridge_start_transmit;
-	dev->after_transmit                = haw_cartridge_end_transmit;
+	dev->before_transmit       = haw_cartridge_start_transmit;
+	dev->after_transmit        = haw_cartridge_end_transmit;
 	dev->protocol.send_byte    = haw_cartridge_send_byte;
 	dev->protocol.receive_byte = haw_cartridge_receive_byte;
 
