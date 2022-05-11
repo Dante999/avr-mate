@@ -3,7 +3,9 @@
 
 #include <stdint.h>
 
-#define PAYLOAD_MAX_TEXT_LENGTH 20
+#pragma pack(1)
+
+#define PAYLOAD_MAX_TEXT_LENGTH 22
 
 enum result { RESULT_OK, RESULT_NOK, RESULT_WRONG_COMMAND };
 
@@ -65,5 +67,7 @@ struct cp_tile_8x8 {
 struct cp_buttons {
 	uint16_t states;
 };
+
+#pragma pack(reset)
 
 #endif /* COMMANDS_H */

@@ -27,8 +27,7 @@ static void cmd_set_pixel(uint8_t *data)
 {
 	struct cp_pixel *pixel = (struct cp_pixel *)data;
 
-	graphx_draw_pixel(pixel->x, pixel->y,
-	                  (pixel->color == COLOR_BLACK) ? PIXEL_ON : PIXEL_OFF);
+	graphx_draw_pixel(pixel->x, pixel->y, pixel->color);
 
 	response_with(CMD_ACK);
 }
