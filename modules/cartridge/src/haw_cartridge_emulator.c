@@ -10,6 +10,7 @@
 
 #define PIPE_HANDHELD_TO_CARTRIDGE "/tmp/handheld_to_cartridge.fifo"
 #define PIPE_CARTRIDGE_TO_HANDHELD "/tmp/cartridge_to_handheld.fifo"
+#define CARTRIDGE_EMULATE_DELAY_MS 30u
 
 struct fifo_pipe g_pipe_cartridge_receive = { //
     .path   = PIPE_HANDHELD_TO_CARTRIDGE,
@@ -35,7 +36,7 @@ static uint8_t haw_cartridge_receive_byte()
 
 static void haw_cartridge_start_transmit()
 {
-	sleep_for_ms(10);
+	sleep_for_ms(CARTRIDGE_EMULATE_DELAY_MS);
 }
 
 static void haw_cartridge_end_transmit() {}
